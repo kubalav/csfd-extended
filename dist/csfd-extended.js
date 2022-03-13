@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         ČSFD Extended
-// @version      2.8.2
+// @version      2.8.4
 // @description  Rozšíření profilů filmů na ČSFD o funkce jako je hodnocení IMDB či odkaz na Ulož.to.
 // @author       Jakub Rychecký <jakub@rychecky.cz>
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
@@ -92,7 +92,7 @@ class ImdbRating {
             .html('<strong>' + imdbVotes + '</strong> hlasů');
 
         let imdbRatingBox = $('<a>')
-            .addClass('rating-average csfd-extended-imdb-rating')
+            .addClass('film-rating-average')
             .css({
                 'display': 'block',
                 'color': '#000000',
@@ -207,7 +207,12 @@ class Toolbar {
 
         let imdbCode = this.csfd.getImdbCode();
         let encodedOpenGraphTitle = encodeURIComponent(this.csfd.getOpenGraphTitle());
+        let nazovBezRoku = encodedOpenGraphTitle.slice(0, -9);
 
+function myFunction() {
+  alert('hi');
+}
+ 
         boxButtons.prepend(
             this.createButton(
                 'Titulky.com',
@@ -235,16 +240,6 @@ class Toolbar {
                 'http://www.boxofficemojo.com/search/?q=' + encodedOpenGraphTitle
             ),
             this.createButton(
-                'Simkl.com',
-                null,
-                'https://simkl.com/search/?type=tv&q=' + encodedEnMovieNameWithYear
-            ),
-            this.createButton(
-                'IMDB',
-                null,
-                'https://www.imdb.com/find?q=' + encodedEnMovieNameWithYear
-            ),
-            this.createButton(
                 'Uloz.to',
                 'pirate',
                 'http://www.uloz.to/hledej?media=video&protected=notPassword&redir=0&q=' + encodedOpenGraphTitle
@@ -255,9 +250,24 @@ class Toolbar {
                 'https://www.google.cz/search?q=' + encodedOpenGraphTitle + ' site:yts.ag OR site:yify-movies.net OR site:yify-movie.com'
             ),
             this.createButton(
-                'Torrent',
+                'SkTorrent',
                 'pirate',
-                'http://www.aiosearch.com/search/4/Torrents/' + encodedOpenGraphTitle
+                'https://sktorrent.eu/torrent/torrents_v2.php?search=' + nazovBezRoku
+            ),
+            this.createButton(
+                'Simkl',
+                null,
+                'https://simkl.com/search/?type=tv&q=' + encodedOpenGraphTitle
+            ),
+            this.createButton(
+                'Uloz.to',
+                'pirate',
+                'https://uloz.to/hledej?q=' + encodedOpenGraphTitle + '&type=videos&videoQuality=high&videoDuration=longest'
+            ),
+            this.createButton(
+                'TMDB',
+                null,
+                'https://www.themoviedb.org/search?query=' + nazovBezRoku
             ),
         );
     }
