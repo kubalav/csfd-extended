@@ -269,6 +269,11 @@ function myFunction() {
                 null,
                 'https://www.themoviedb.org/search?query=' + nazovBezRoku
             ),
+            this.createButton(
+                'SerialZone',
+                null,
+                'https://www.serialzone.cz/hledani/?co=' + nazovBezRoku
+            ),
         );
     }
 
